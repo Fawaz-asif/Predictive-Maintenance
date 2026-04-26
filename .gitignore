@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+collect_metrics.py
+save_artifacts.py
+run_analysis.py
+run_notebook.py
+predictive_maintenance.py
+progress_report.md
+Predictive_Maintenance_Project.ipynb
+Documentation/
+Trained_models/binary_decision_tree_feature_engineered_13features_threshold_0p96.joblib
+Trained_models/binary_decision_tree_hyperparameter_tuned_smote_8features_threshold_0p50.joblib
+Trained_models/Models_Details.pdf
