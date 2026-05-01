@@ -37,12 +37,12 @@ CUSTOM_CSS = """
 
 /* ── Header ──────────────────────────────────────────────────────── */
 .header-bar {
-    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    background: linear-gradient(135deg, #2e0f12 0%, #5c1e24 50%, #3d1418 100%);
     padding: 36px 40px 32px;
     border-radius: 20px;
     margin-bottom: 20px;
     text-align: center;
-    box-shadow: 0 12px 40px rgba(15, 12, 41, 0.45);
+    box-shadow: 0 12px 40px rgba(46, 15, 18, 0.45);
     position: relative;
     overflow: hidden;
 }
@@ -53,8 +53,8 @@ CUSTOM_CSS = """
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 70% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+    background: radial-gradient(circle at 30% 50%, rgba(217, 186, 140, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(163, 42, 57, 0.08) 0%, transparent 50%);
     pointer-events: none;
 }
 .header-bar h1 {
@@ -67,7 +67,7 @@ CUSTOM_CSS = """
     z-index: 1;
 }
 .header-bar p {
-    color: #a5a5c8;
+    color: #d1bba4;
     margin: 0;
     font-size: 1em;
     font-weight: 400;
@@ -77,9 +77,9 @@ CUSTOM_CSS = """
 }
 .header-bar .badge {
     display: inline-block;
-    background: rgba(99, 102, 241, 0.25);
-    border: 1px solid rgba(99, 102, 241, 0.4);
-    color: #a5b4fc;
+    background: rgba(217, 186, 140, 0.25);
+    border: 1px solid rgba(217, 186, 140, 0.4);
+    color: #f5e6d3;
     padding: 4px 14px;
     border-radius: 20px;
     font-size: 0.78em;
@@ -93,8 +93,8 @@ CUSTOM_CSS = """
 
 /* ── Section headers ─────────────────────────────────────────────── */
 .section-header {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.05));
-    border: 1px solid rgba(99, 102, 241, 0.15);
+    background: linear-gradient(135deg, rgba(163, 42, 57, 0.08), rgba(217, 186, 140, 0.05));
+    border: 1px solid rgba(163, 42, 57, 0.15);
     border-radius: 12px;
     padding: 14px 18px;
     margin-bottom: 12px;
@@ -103,13 +103,13 @@ CUSTOM_CSS = """
     margin: 0;
     font-size: 1em;
     font-weight: 700;
-    color: #c7d2fe;
+    color: #e8cca4;
     letter-spacing: 0.3px;
 }
 .section-header p {
     margin: 4px 0 0;
     font-size: 0.82em;
-    color: #94a3b8;
+    color: #c4af9d;
 }
 
 /* ── Result cards ────────────────────────────────────────────────── */
@@ -162,7 +162,7 @@ CUSTOM_CSS = """
 }
 .result-card .meta {
     font-size: 0.8em;
-    color: #94a3b8;
+    color: #c4af9d;
     padding-top: 10px;
     border-top: 1px solid rgba(255,255,255,0.08);
     margin-top: 10px;
@@ -177,8 +177,8 @@ CUSTOM_CSS = """
 }
 .stat-card {
     flex: 1;
-    background: linear-gradient(135deg, rgba(30, 27, 60, 0.8), rgba(40, 37, 75, 0.6));
-    border: 1px solid rgba(99, 102, 241, 0.15);
+    background: linear-gradient(135deg, rgba(46, 15, 18, 0.8), rgba(61, 20, 24, 0.6));
+    border: 1px solid rgba(163, 42, 57, 0.15);
     border-radius: 14px;
     padding: 18px;
     text-align: center;
@@ -191,33 +191,33 @@ CUSTOM_CSS = """
 }
 .stat-card .stat-label {
     font-size: 0.78em;
-    color: #94a3b8;
+    color: #c4af9d;
     text-transform: uppercase;
     letter-spacing: 0.8px;
     font-weight: 600;
 }
-.stat-total .stat-value { color: #a5b4fc; }
+.stat-total .stat-value { color: #f5e6d3; }
 .stat-ok    .stat-value { color: #34d399; }
 .stat-fail  .stat-value { color: #f87171; }
 .stat-rate  .stat-value { color: #fbbf24; }
 
 /* ── Info box ────────────────────────────────────────────────────── */
 .info-box {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(59, 130, 246, 0.05));
-    border: 1px solid rgba(99, 102, 241, 0.2);
+    background: linear-gradient(135deg, rgba(163, 42, 57, 0.08), rgba(217, 186, 140, 0.05));
+    border: 1px solid rgba(163, 42, 57, 0.2);
     border-radius: 12px;
     padding: 16px 20px;
     margin: 10px 0;
     font-size: 0.88em;
-    color: #c7d2fe;
+    color: #e8cca4;
     line-height: 1.6;
 }
 .info-box code {
-    background: rgba(99, 102, 241, 0.15);
+    background: rgba(163, 42, 57, 0.15);
     padding: 2px 7px;
     border-radius: 5px;
     font-size: 0.9em;
-    color: #e0e7ff;
+    color: #f5e6d3;
 }
 
 /* ── Footer ──────────────────────────────────────────────────────── */
@@ -231,20 +231,20 @@ CUSTOM_CSS = """
     letter-spacing: 0.3px;
 }
 .footer a {
-    color: #818cf8;
+    color: #d6a87c;
     text-decoration: none;
 }
 
 /* ── Misc polish ─────────────────────────────────────────────────── */
 .gradio-container { max-width: 1100px !important; }
 button.primary {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    background: linear-gradient(135deg, #8a2533, #b03041) !important;
     border: none !important;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35) !important;
+    box-shadow: 0 4px 15px rgba(163, 42, 57, 0.35) !important;
     transition: all 0.2s ease !important;
 }
 button.primary:hover {
-    box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5) !important;
+    box-shadow: 0 6px 25px rgba(163, 42, 57, 0.5) !important;
     transform: translateY(-1px) !important;
 }
 """
@@ -362,9 +362,9 @@ with gr.Blocks(
     title="Predictive Maintenance Dashboard",
     css=CUSTOM_CSS,
     theme=gr.themes.Soft(
-        primary_hue="indigo",
-        secondary_hue="slate",
-        neutral_hue="slate",
+        primary_hue="rose",
+        secondary_hue="stone",
+        neutral_hue="stone",
         font=gr.themes.GoogleFont("Inter"),
     ),
 ) as demo:
@@ -496,9 +496,9 @@ if __name__ == "__main__":
         ssr_mode=False,
         css=CUSTOM_CSS,
         theme=gr.themes.Soft(
-            primary_hue="indigo",
-            secondary_hue="slate",
-            neutral_hue="slate",
+            primary_hue="rose",
+            secondary_hue="stone",
+            neutral_hue="stone",
             font=gr.themes.GoogleFont("Inter"),
         ),
     )
