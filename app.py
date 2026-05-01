@@ -15,6 +15,10 @@ import pandas as pd
 from pipeline import preprocess, build_single_input
 from router import predict
 
+# ── Paths ────────────────────────────────────────────────────────────
+_BASE = os.path.dirname(os.path.abspath(__file__))
+SAMPLE_CSV_PATH = os.path.join(_BASE, "sample_batch.csv")
+
 # ── Shared UI options ────────────────────────────────────────────────
 PRIORITY_OPTIONS = [
     "Minimize missed failures",
@@ -27,60 +31,221 @@ DETAIL_OPTIONS = [
 
 # ── Custom CSS for a polished look ───────────────────────────────────
 CUSTOM_CSS = """
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 * { font-family: 'Inter', sans-serif !important; }
 
+/* ── Header ──────────────────────────────────────────────────────── */
 .header-bar {
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    padding: 28px 32px;
-    border-radius: 16px;
-    margin-bottom: 16px;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    padding: 36px 40px 32px;
+    border-radius: 20px;
+    margin-bottom: 20px;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    box-shadow: 0 12px 40px rgba(15, 12, 41, 0.45);
+    position: relative;
+    overflow: hidden;
+}
+.header-bar::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+    pointer-events: none;
 }
 .header-bar h1 {
     color: #fff;
-    font-size: 2em;
-    margin: 0 0 6px 0;
-    letter-spacing: -0.5px;
+    font-size: 2.2em;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.8px;
+    position: relative;
+    z-index: 1;
 }
 .header-bar p {
-    color: #b8b8d0;
+    color: #a5a5c8;
     margin: 0;
-    font-size: 0.95em;
+    font-size: 1em;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    position: relative;
+    z-index: 1;
+}
+.header-bar .badge {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.25);
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    color: #a5b4fc;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.78em;
+    font-weight: 600;
+    margin-top: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
 }
 
+/* ── Section headers ─────────────────────────────────────────────── */
+.section-header {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.05));
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+}
+.section-header h3 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: 700;
+    color: #c7d2fe;
+    letter-spacing: 0.3px;
+}
+.section-header p {
+    margin: 4px 0 0;
+    font-size: 0.82em;
+    color: #94a3b8;
+}
+
+/* ── Result cards ────────────────────────────────────────────────── */
 .result-card {
-    padding: 24px;
-    border-radius: 14px;
-    margin-top: 12px;
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.08);
+    padding: 28px;
+    border-radius: 16px;
+    margin-top: 14px;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: fadeSlideIn 0.4s ease-out;
+}
+.result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 .result-ok {
-    background: linear-gradient(135deg, #0d3320, #1a5c38);
-    border-left: 5px solid #2ecc71;
+    background: linear-gradient(135deg, #0a2e1c, #145233);
+    border-left: 5px solid #34d399;
 }
 .result-fail {
-    background: linear-gradient(135deg, #3b0f0f, #5c1a1a);
-    border-left: 5px solid #e74c3c;
+    background: linear-gradient(135deg, #2d0a0a, #541a1a);
+    border-left: 5px solid #f87171;
+}
+.result-card .icon {
+    font-size: 2em;
+    margin-bottom: 4px;
 }
 .result-card .status {
-    font-size: 1.35em;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-size: 1.4em;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
 }
-.result-ok .status  { color: #2ecc71; }
-.result-fail .status { color: #e74c3c; }
+.result-ok  .status { color: #34d399; }
+.result-fail .status { color: #f87171; }
 .result-card .reason {
     font-size: 1.05em;
-    color: #ddd;
-    margin-bottom: 6px;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+.result-card .reason strong {
+    color: #fff;
 }
 .result-card .meta {
-    font-size: 0.82em;
-    color: #999;
+    font-size: 0.8em;
+    color: #94a3b8;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 10px;
+}
+
+/* ── Summary stats row (batch tab) ───────────────────────────────── */
+.stats-row {
+    display: flex;
+    gap: 14px;
+    margin: 16px 0;
+    animation: fadeSlideIn 0.4s ease-out;
+}
+.stat-card {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(30, 27, 60, 0.8), rgba(40, 37, 75, 0.6));
+    border: 1px solid rgba(99, 102, 241, 0.15);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.stat-card .stat-value {
+    font-size: 2em;
+    font-weight: 800;
+    margin-bottom: 2px;
+}
+.stat-card .stat-label {
+    font-size: 0.78em;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+}
+.stat-total .stat-value { color: #a5b4fc; }
+.stat-ok    .stat-value { color: #34d399; }
+.stat-fail  .stat-value { color: #f87171; }
+.stat-rate  .stat-value { color: #fbbf24; }
+
+/* ── Info box ────────────────────────────────────────────────────── */
+.info-box {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(59, 130, 246, 0.05));
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 10px 0;
+    font-size: 0.88em;
+    color: #c7d2fe;
+    line-height: 1.6;
+}
+.info-box code {
+    background: rgba(99, 102, 241, 0.15);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: #e0e7ff;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+.footer {
+    text-align: center;
+    padding: 20px 0 8px;
+    margin-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: #64748b;
+    font-size: 0.8em;
+    letter-spacing: 0.3px;
+}
+.footer a {
+    color: #818cf8;
+    text-decoration: none;
+}
+
+/* ── Misc polish ─────────────────────────────────────────────────── */
+.gradio-container { max-width: 1100px !important; }
+button.primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35) !important;
+    transition: all 0.2s ease !important;
+}
+button.primary:hover {
+    box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5) !important;
+    transform: translateY(-1px) !important;
 }
 """
 
@@ -97,26 +262,33 @@ def predict_single(
         X = preprocess(df)
         res = predict(X, business_priority, diagnostic_detail)[0]
     except Exception as exc:
-        return f"<div style='color:#e74c3c;font-weight:600'>Error: {exc}</div>"
+        return f"""
+        <div class='result-card result-fail'>
+            <div class='icon'>⚠️</div>
+            <div class='status'>ERROR</div>
+            <div class='reason'>{exc}</div>
+        </div>"""
 
     if res["failure_predicted"]:
         return f"""
         <div class='result-card result-fail'>
-            <div class='status'>WARNING: FAILURE DETECTED</div>
+            <div class='icon'>🚨</div>
+            <div class='status'>FAILURE DETECTED</div>
             <div class='reason'>Predicted cause: <strong>{res['failure_reason']}</strong></div>
             <div class='meta'>
-                Priority: {business_priority} &nbsp;|&nbsp;
-                Detail: {diagnostic_detail}
+                🎯 Priority: {business_priority} &nbsp;·&nbsp;
+                🔬 Detail: {diagnostic_detail}
             </div>
         </div>"""
     else:
         return f"""
         <div class='result-card result-ok'>
+            <div class='icon'>✅</div>
             <div class='status'>SYSTEM NORMAL</div>
-            <div class='reason'>No failure predicted - machine operating within safe parameters.</div>
+            <div class='reason'>No failure predicted — machine operating within safe parameters.</div>
             <div class='meta'>
-                Priority: {business_priority} &nbsp;|&nbsp;
-                Detail: {diagnostic_detail}
+                🎯 Priority: {business_priority} &nbsp;·&nbsp;
+                🔬 Detail: {diagnostic_detail}
             </div>
         </div>"""
 
@@ -125,28 +297,28 @@ def predict_single(
 def predict_batch(csv_file, business_priority, diagnostic_detail):
     if csv_file is None:
         gr.Warning("Please upload a CSV file first.")
-        return None, None
+        return None, None, ""
 
     try:
         filepath = csv_file.name if hasattr(csv_file, "name") else csv_file
         df_raw = pd.read_csv(filepath)
     except Exception as exc:
         gr.Warning(f"Failed to read CSV: {exc}")
-        return None, None
+        return None, None, ""
 
     if "Type" not in df_raw.columns:
         gr.Warning(
             "CSV is missing the 'Type' column (expected values: L, M, H). "
             "Cannot proceed."
         )
-        return None, None
+        return None, None, ""
 
     try:
         X = preprocess(df_raw.copy())
         results = predict(X, business_priority, diagnostic_detail)
     except Exception as exc:
         gr.Warning(f"Prediction failed: {exc}")
-        return None, None
+        return None, None, ""
 
     df_out = df_raw.copy()
     df_out["Predicted_Failure"] = [int(r["failure_predicted"]) for r in results]
@@ -155,8 +327,34 @@ def predict_batch(csv_file, business_priority, diagnostic_detail):
     output_path = os.path.join(tempfile.gettempdir(), "predictions_output.csv")
     df_out.to_csv(output_path, index=False)
 
+    # Build summary stats
+    total = len(results)
+    n_fail = sum(1 for r in results if r["failure_predicted"])
+    n_ok = total - n_fail
+    rate = (n_fail / total * 100) if total > 0 else 0
+
+    summary_html = f"""
+    <div class='stats-row'>
+        <div class='stat-card stat-total'>
+            <div class='stat-value'>{total}</div>
+            <div class='stat-label'>Total Rows</div>
+        </div>
+        <div class='stat-card stat-ok'>
+            <div class='stat-value'>{n_ok}</div>
+            <div class='stat-label'>Normal</div>
+        </div>
+        <div class='stat-card stat-fail'>
+            <div class='stat-value'>{n_fail}</div>
+            <div class='stat-label'>Failures</div>
+        </div>
+        <div class='stat-card stat-rate'>
+            <div class='stat-value'>{rate:.1f}%</div>
+            <div class='stat-label'>Failure Rate</div>
+        </div>
+    </div>"""
+
     preview = df_out.head(15)
-    return preview, output_path
+    return preview, output_path, summary_html
 
 
 # ── Build Gradio interface (Gradio 6.x compatible) ───────────────────
@@ -174,22 +372,26 @@ with gr.Blocks(
     # ── Header ───────────────────────────────────────────────────────
     gr.HTML("""
     <div class='header-bar'>
-        <h1>Predictive Maintenance Dashboard</h1>
+        <h1>⚙️ Predictive Maintenance Dashboard</h1>
         <p>Real-time failure prediction from industrial sensor data &mdash;
         powered by Decision Tree ensemble models</p>
+        <span class='badge'>CCP &middot; Machine Learning Project</span>
     </div>
     """)
 
     # ── Tab 1 - Manual Input ─────────────────────────────────────────
-    with gr.Tab("Manual Input"):
-        gr.Markdown(
-            "Enter sensor readings manually to get an instant prediction. "
-            "Adjust the **Business Priority** and **Diagnostic Detail** to "
-            "change model behaviour."
-        )
+    with gr.Tab("🔧 Manual Input"):
+        gr.HTML("""
+        <div class='info-box'>
+            💡 Enter sensor readings manually to get an instant prediction.
+            Adjust <strong>Business Priority</strong> to switch between cost-sensitive
+            and baseline models, and <strong>Diagnostic Detail</strong> to choose
+            single vs. multi-cause diagnosis.
+        </div>
+        """)
         with gr.Row(equal_height=True):
             with gr.Column(scale=1):
-                gr.Markdown("### Sensor Readings")
+                gr.HTML("<div class='section-header'><h3>📊 Sensor Readings</h3><p>Input real-time machine telemetry</p></div>")
                 air_temp     = gr.Number(label="Air Temperature (K)",     value=298.1, minimum=290, maximum=310)
                 process_temp = gr.Number(label="Process Temperature (K)", value=308.6, minimum=300, maximum=320)
                 rpm          = gr.Number(label="Rotational Speed (RPM)",  value=1551,  minimum=0,   maximum=3000)
@@ -203,7 +405,7 @@ with gr.Blocks(
                 )
 
             with gr.Column(scale=1):
-                gr.Markdown("### Model Configuration")
+                gr.HTML("<div class='section-header'><h3>🎛️ Model Configuration</h3><p>Select decision strategy and diagnostic depth</p></div>")
                 priority = gr.Radio(
                     label="Business Priority",
                     choices=PRIORITY_OPTIONS,
@@ -216,9 +418,9 @@ with gr.Blocks(
                     value=DETAIL_OPTIONS[0],
                     info="Multi-class = single root cause / Multi-label = all concurrent causes",
                 )
-                run_btn = gr.Button("Run Prediction", variant="primary", size="lg")
+                run_btn = gr.Button("⚡ Run Prediction", variant="primary", size="lg")
 
-                gr.Markdown("### Prediction Result")
+                gr.HTML("<div class='section-header'><h3>📋 Prediction Result</h3><p>Model output will appear below</p></div>")
                 output = gr.HTML()
 
         run_btn.click(
@@ -228,15 +430,33 @@ with gr.Blocks(
         )
 
     # ── Tab 2 - Batch CSV Upload ─────────────────────────────────────
-    with gr.Tab("Batch CSV Upload"):
-        gr.Markdown(
-            "Upload a CSV with the same columns as the training data. "
-            "`Predicted_Failure` and `Failure_Reason` columns will be appended."
-        )
+    with gr.Tab("📁 Batch CSV Upload"):
+        gr.HTML("""
+        <div class='info-box'>
+            📤 Upload a CSV file with sensor columns
+            (<code>Type</code>, <code>Air temperature [K]</code>,
+            <code>Process temperature [K]</code>, <code>Rotational speed [rpm]</code>,
+            <code>Torque [Nm]</code>, <code>Tool wear [min]</code>).
+            The model will append <code>Predicted_Failure</code> and
+            <code>Failure_Reason</code> columns to the results.
+        </div>
+        """)
+
+        # Sample CSV download
+        if os.path.exists(SAMPLE_CSV_PATH):
+            gr.HTML("<div class='section-header'><h3>📥 Sample File</h3><p>Download this 20-row demo CSV to test the batch pipeline</p></div>")
+            sample_download = gr.File(
+                label="sample_batch.csv — 20 rows with mixed failure scenarios",
+                value=SAMPLE_CSV_PATH,
+                interactive=False,
+            )
+
         with gr.Row():
             with gr.Column(scale=2):
+                gr.HTML("<div class='section-header'><h3>📂 Upload Your CSV</h3><p>Drag & drop or click to browse</p></div>")
                 csv_input = gr.File(label="Upload CSV", file_types=[".csv"])
             with gr.Column(scale=1):
+                gr.HTML("<div class='section-header'><h3>🎛️ Configuration</h3></div>")
                 priority_b = gr.Radio(
                     label="Business Priority",
                     choices=PRIORITY_OPTIONS,
@@ -248,23 +468,37 @@ with gr.Blocks(
                     value=DETAIL_OPTIONS[0],
                 )
 
-        batch_btn   = gr.Button("Run Batch Prediction", variant="primary", size="lg")
-        preview_tbl = gr.Dataframe(label="Preview (first 15 rows)", wrap=True)
-        download_btn = gr.File(label="Download Full Results CSV")
+        batch_btn = gr.Button("⚡ Run Batch Prediction", variant="primary", size="lg")
+
+        # Summary stats (populated after prediction)
+        batch_summary = gr.HTML()
+
+        preview_tbl  = gr.Dataframe(label="Preview (first 15 rows)", wrap=True)
+        download_btn = gr.File(label="📥 Download Full Results CSV")
 
         batch_btn.click(
             fn=predict_batch,
             inputs=[csv_input, priority_b, detail_b],
-            outputs=[preview_tbl, download_btn],
+            outputs=[preview_tbl, download_btn, batch_summary],
         )
 
     # ── Footer ───────────────────────────────────────────────────────
-    gr.Markdown(
-        "<center style='color:#666;font-size:0.82em;margin-top:16px;'>"
-        "Predictive Maintenance Project | Decision Tree Models | "
-        "Built with Gradio</center>"
-    )
+    gr.HTML("""
+    <div class='footer'>
+        Predictive Maintenance Project &middot; Decision Tree Models &middot;
+        Built with <a href='https://gradio.app' target='_blank'>Gradio</a>
+    </div>
+    """)
 
 # ── Launch ───────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    demo.launch(ssr_mode=False)
+    demo.launch(
+        ssr_mode=False,
+        css=CUSTOM_CSS,
+        theme=gr.themes.Soft(
+            primary_hue="indigo",
+            secondary_hue="slate",
+            neutral_hue="slate",
+            font=gr.themes.GoogleFont("Inter"),
+        ),
+    )

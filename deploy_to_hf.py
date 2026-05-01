@@ -21,6 +21,7 @@ FILES_TO_UPLOAD = [
     "requirements.txt",
     "README.md",
     "DETAILS.md",
+    "sample_batch.csv",
     "Predictive_M.csv",
     "Trained_models/standard_scaler.joblib",
     "Trained_models/feature_columns.json",
