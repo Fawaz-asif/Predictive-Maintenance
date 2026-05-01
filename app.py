@@ -162,6 +162,13 @@ def predict_batch(csv_file, business_priority, diagnostic_detail):
 # ── Build Gradio interface (Gradio 6.x compatible) ───────────────────
 with gr.Blocks(
     title="Predictive Maintenance Dashboard",
+    css=CUSTOM_CSS,
+    theme=gr.themes.Soft(
+        primary_hue="indigo",
+        secondary_hue="slate",
+        neutral_hue="slate",
+        font=gr.themes.GoogleFont("Inter"),
+    ),
 ) as demo:
 
     # ── Header ───────────────────────────────────────────────────────
@@ -260,13 +267,4 @@ with gr.Blocks(
 
 # ── Launch ───────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    demo.launch(
-        ssr_mode=False,
-        css=CUSTOM_CSS,
-        theme=gr.themes.Soft(
-            primary_hue="indigo",
-            secondary_hue="slate",
-            neutral_hue="slate",
-            font=gr.themes.GoogleFont("Inter"),
-        ),
-    )
+    demo.launch(ssr_mode=False)
