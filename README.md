@@ -1,83 +1,83 @@
-<div align="center">
-
-# Predictive Maintenance Dashboard
-
-### Real-Time Industrial Sensor Analytics & Failure Prediction
-
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Gradio](https://img.shields.io/badge/Gradio-UI-FF7C00?style=for-the-badge)](https://gradio.app/)
-[![Deployed on Hugging Face](https://img.shields.io/badge/Deployed-Hugging_Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](#)
-
-### 🌐 **[Live Demo: Try the Dashboard on Hugging Face!](https://huggingface.co/spaces/fawazasif/Predictive-Maintenance)**
-
-A complete machine learning pipeline and interactive dashboard that predicts industrial machine failures before they happen. Uses Decision Tree classification to analyze sensor data (rotational speed, torque, tool wear, temperature) and identify specific failure modes.
-
-</div>
-
----
-
-## Features
-
-- **Real-Time Prediction**: Instantly predicts whether a machine will fail based on current sensor readings.
-- **Failure Mode Classification**: Doesn't just say "Fail" -- identifies the specific *type* of failure:
-  - Heat Dissipation Failure (HDF)
-  - Power Failure (PWF)
-  - Overstrain Failure (OSF)
-  - Tool Wear Failure (TWF)
-- **Batch Processing**: Upload a CSV of sensor logs to predict failures across hundreds of machines simultaneously.
-- **Interactive UI**: Clean, modern web interface built with Gradio 6, featuring dynamic themes and data visualization.
-
----
-
-## Architecture
-
-1. **Preprocessing Pipeline** (pipeline.py): Cleans data, handles SMOTE balancing for rare failure types, and scales numerical features.
-2. **Model Router** (outer.py): Implements a two-stage routing architecture. Stage 1 detects if a failure will occur. If yes, Stage 2 identifies the specific failure mode.
-3. **Web Application** (pp.py): The Gradio frontend that handles user input, communicates with the router, and displays visually color-coded results.
-4. **Hugging Face Deployment** (deploy_to_hf.py): Automated deployment scripts for Hugging Face Spaces.
-
----
-
-## Getting Started
-
-### Prerequisites
-- Python 3.9+
-- pip
-
-### Installation
-
-1. Clone the repository:
-\\\ash
-git clone https://github.com/Fawaz-asif/Predictive-Maintenance.git
-cd Predictive-Maintenance
-\\\
-
-2. Install dependencies:
-\\\ash
-pip install -r requirements.txt
-\\\
-
-3. Run the dashboard:
-\\\ash
-python app.py
-\\\
-*The app will be available at http://localhost:7860.*
-
----
-
-## CI/CD
-
-This repository uses **GitHub Actions** for continuous integration. On every push, the workflow automatically:
-- Sets up the Python environment.
-- Installs dependencies.
-- Runs syntax checks and linting to ensure production-ready code.
-
----
-
-## Dataset
-
-The model is trained on the AI4I 2020 Predictive Maintenance Dataset (Predictive_M.csv).
-
-## Author
-**Fawaz Asif**
+-<-d-i-v- -a-l-i-g-n-=-"-c-e-n-t-e-r-"->-
+-
+-#- -P-r-e-d-i-c-t-i-v-e- -M-a-i-n-t-e-n-a-n-c-e- -D-a-s-h-b-o-a-r-d-
+-
+-#-#-#- -R-e-a-l---T-i-m-e- -I-n-d-u-s-t-r-i-a-l- -S-e-n-s-o-r- -A-n-a-l-y-t-i-c-s- -&- -F-a-i-l-u-r-e- -P-r-e-d-i-c-t-i-o-n-
+-
+-[-!-[-P-y-t-h-o-n-]-(-h-t-t-p-s-:-/-/-i-m-g-.-s-h-i-e-l-d-s-.-i-o-/-b-a-d-g-e-/-P-y-t-h-o-n---3-.-1-0-+---3-7-7-6-A-B-?-s-t-y-l-e-=-f-o-r---t-h-e---b-a-d-g-e-&-l-o-g-o-=-p-y-t-h-o-n-&-l-o-g-o-C-o-l-o-r-=-w-h-i-t-e-)-]-(-h-t-t-p-s-:-/-/-p-y-t-h-o-n-.-o-r-g-)-
+-[-!-[-S-c-i-k-i-t---L-e-a-r-n-]-(-h-t-t-p-s-:-/-/-i-m-g-.-s-h-i-e-l-d-s-.-i-o-/-b-a-d-g-e-/-S-c-i-k-i-t-----L-e-a-r-n---F-7-9-3-1-E-?-s-t-y-l-e-=-f-o-r---t-h-e---b-a-d-g-e-&-l-o-g-o-=-s-c-i-k-i-t---l-e-a-r-n-&-l-o-g-o-C-o-l-o-r-=-w-h-i-t-e-)-]-(-h-t-t-p-s-:-/-/-s-c-i-k-i-t---l-e-a-r-n-.-o-r-g-/-)-
+-[-!-[-G-r-a-d-i-o-]-(-h-t-t-p-s-:-/-/-i-m-g-.-s-h-i-e-l-d-s-.-i-o-/-b-a-d-g-e-/-G-r-a-d-i-o---U-I---F-F-7-C-0-0-?-s-t-y-l-e-=-f-o-r---t-h-e---b-a-d-g-e-)-]-(-h-t-t-p-s-:-/-/-g-r-a-d-i-o-.-a-p-p-/-)-
+-[-!-[-D-e-p-l-o-y-e-d- -o-n- -H-u-g-g-i-n-g- -F-a-c-e-]-(-h-t-t-p-s-:-/-/-i-m-g-.-s-h-i-e-l-d-s-.-i-o-/-b-a-d-g-e-/-D-e-p-l-o-y-e-d---H-u-g-g-i-n-g-_-F-a-c-e---F-F-D-2-1-E-?-s-t-y-l-e-=-f-o-r---t-h-e---b-a-d-g-e-&-l-o-g-o-=-h-u-g-g-i-n-g-f-a-c-e-&-l-o-g-o-C-o-l-o-r-=-b-l-a-c-k-)-]-(-#-)-
+-
+-#-#-#- -�-�- -*-*-[-L-i-v-e- -D-e-m-o-:- -T-r-y- -t-h-e- -D-a-s-h-b-o-a-r-d- -o-n- -H-u-g-g-i-n-g- -F-a-c-e-!-]-(-h-t-t-p-s-:-/-/-h-u-g-g-i-n-g-f-a-c-e-.-c-o-/-s-p-a-c-e-s-/-f-a-w-a-z-a-s-i-f-/-P-r-e-d-i-c-t-i-v-e---M-a-i-n-t-e-n-a-n-c-e-)-*-*-
+-
+-A- -c-o-m-p-l-e-t-e- -m-a-c-h-i-n-e- -l-e-a-r-n-i-n-g- -p-i-p-e-l-i-n-e- -a-n-d- -i-n-t-e-r-a-c-t-i-v-e- -d-a-s-h-b-o-a-r-d- -t-h-a-t- -p-r-e-d-i-c-t-s- -i-n-d-u-s-t-r-i-a-l- -m-a-c-h-i-n-e- -f-a-i-l-u-r-e-s- -b-e-f-o-r-e- -t-h-e-y- -h-a-p-p-e-n-.- -U-s-e-s- -D-e-c-i-s-i-o-n- -T-r-e-e- -c-l-a-s-s-i-f-i-c-a-t-i-o-n- -t-o- -a-n-a-l-y-z-e- -s-e-n-s-o-r- -d-a-t-a- -(-r-o-t-a-t-i-o-n-a-l- -s-p-e-e-d-,- -t-o-r-q-u-e-,- -t-o-o-l- -w-e-a-r-,- -t-e-m-p-e-r-a-t-u-r-e-)- -a-n-d- -i-d-e-n-t-i-f-y- -s-p-e-c-i-f-i-c- -f-a-i-l-u-r-e- -m-o-d-e-s-.-
+-
+-<-/-d-i-v->-
+-
+-------
+-
+-#-#- -F-e-a-t-u-r-e-s-
+-
+--- -*-*-R-e-a-l---T-i-m-e- -P-r-e-d-i-c-t-i-o-n-*-*-:- -I-n-s-t-a-n-t-l-y- -p-r-e-d-i-c-t-s- -w-h-e-t-h-e-r- -a- -m-a-c-h-i-n-e- -w-i-l-l- -f-a-i-l- -b-a-s-e-d- -o-n- -c-u-r-r-e-n-t- -s-e-n-s-o-r- -r-e-a-d-i-n-g-s-.-
+--- -*-*-F-a-i-l-u-r-e- -M-o-d-e- -C-l-a-s-s-i-f-i-c-a-t-i-o-n-*-*-:- -D-o-e-s-n-'-t- -j-u-s-t- -s-a-y- -"-F-a-i-l-"- ----- -i-d-e-n-t-i-f-i-e-s- -t-h-e- -s-p-e-c-i-f-i-c- -*-t-y-p-e-*- -o-f- -f-a-i-l-u-r-e-:-
+- - --- -H-e-a-t- -D-i-s-s-i-p-a-t-i-o-n- -F-a-i-l-u-r-e- -(-H-D-F-)-
+- - --- -P-o-w-e-r- -F-a-i-l-u-r-e- -(-P-W-F-)-
+- - --- -O-v-e-r-s-t-r-a-i-n- -F-a-i-l-u-r-e- -(-O-S-F-)-
+- - --- -T-o-o-l- -W-e-a-r- -F-a-i-l-u-r-e- -(-T-W-F-)-
+--- -*-*-B-a-t-c-h- -P-r-o-c-e-s-s-i-n-g-*-*-:- -U-p-l-o-a-d- -a- -C-S-V- -o-f- -s-e-n-s-o-r- -l-o-g-s- -t-o- -p-r-e-d-i-c-t- -f-a-i-l-u-r-e-s- -a-c-r-o-s-s- -h-u-n-d-r-e-d-s- -o-f- -m-a-c-h-i-n-e-s- -s-i-m-u-l-t-a-n-e-o-u-s-l-y-.-
+--- -*-*-I-n-t-e-r-a-c-t-i-v-e- -U-I-*-*-:- -C-l-e-a-n-,- -m-o-d-e-r-n- -w-e-b- -i-n-t-e-r-f-a-c-e- -b-u-i-l-t- -w-i-t-h- -G-r-a-d-i-o- -6-,- -f-e-a-t-u-r-i-n-g- -d-y-n-a-m-i-c- -t-h-e-m-e-s- -a-n-d- -d-a-t-a- -v-i-s-u-a-l-i-z-a-t-i-o-n-.-
+-
+-------
+-
+-#-#- -A-r-c-h-i-t-e-c-t-u-r-e-
+-
+-1-.- -*-*-P-r-e-p-r-o-c-e-s-s-i-n-g- -P-i-p-e-l-i-n-e-*-*- -(-p-i-p-e-l-i-n-e-.-p-y-)-:- -C-l-e-a-n-s- -d-a-t-a-,- -h-a-n-d-l-e-s- -S-M-O-T-E- -b-a-l-a-n-c-i-n-g- -f-o-r- -r-a-r-e- -f-a-i-l-u-r-e- -t-y-p-e-s-,- -a-n-d- -s-c-a-l-e-s- -n-u-m-e-r-i-c-a-l- -f-e-a-t-u-r-e-s-.-
+-2-.- -*-*-M-o-d-e-l- -R-o-u-t-e-r-*-*- -(--o-u-t-e-r-.-p-y-)-:- -I-m-p-l-e-m-e-n-t-s- -a- -t-w-o---s-t-a-g-e- -r-o-u-t-i-n-g- -a-r-c-h-i-t-e-c-t-u-r-e-.- -S-t-a-g-e- -1- -d-e-t-e-c-t-s- -i-f- -a- -f-a-i-l-u-r-e- -w-i-l-l- -o-c-c-u-r-.- -I-f- -y-e-s-,- -S-t-a-g-e- -2- -i-d-e-n-t-i-f-i-e-s- -t-h-e- -s-p-e-c-i-f-i-c- -f-a-i-l-u-r-e- -m-o-d-e-.-
+-3-.- -*-*-W-e-b- -A-p-p-l-i-c-a-t-i-o-n-*-*- -(--p-p-.-p-y-)-:- -T-h-e- -G-r-a-d-i-o- -f-r-o-n-t-e-n-d- -t-h-a-t- -h-a-n-d-l-e-s- -u-s-e-r- -i-n-p-u-t-,- -c-o-m-m-u-n-i-c-a-t-e-s- -w-i-t-h- -t-h-e- -r-o-u-t-e-r-,- -a-n-d- -d-i-s-p-l-a-y-s- -v-i-s-u-a-l-l-y- -c-o-l-o-r---c-o-d-e-d- -r-e-s-u-l-t-s-.-
+-4-.- -*-*-H-u-g-g-i-n-g- -F-a-c-e- -D-e-p-l-o-y-m-e-n-t-*-*- -(-d-e-p-l-o-y-_-t-o-_-h-f-.-p-y-)-:- -A-u-t-o-m-a-t-e-d- -d-e-p-l-o-y-m-e-n-t- -s-c-r-i-p-t-s- -f-o-r- -H-u-g-g-i-n-g- -F-a-c-e- -S-p-a-c-e-s-.-
+-
+-------
+-
+-#-#- -G-e-t-t-i-n-g- -S-t-a-r-t-e-d-
+-
+-#-#-#- -P-r-e-r-e-q-u-i-s-i-t-e-s-
+--- -P-y-t-h-o-n- -3-.-9-+-
+--- -p-i-p-
+-
+-#-#-#- -I-n-s-t-a-l-l-a-t-i-o-n-
+-
+-1-.- -C-l-o-n-e- -t-h-e- -r-e-p-o-s-i-t-o-r-y-:-
+-\-\-\--a-s-h-
+-g-i-t- -c-l-o-n-e- -h-t-t-p-s-:-/-/-g-i-t-h-u-b-.-c-o-m-/-F-a-w-a-z---a-s-i-f-/-P-r-e-d-i-c-t-i-v-e---M-a-i-n-t-e-n-a-n-c-e-.-g-i-t-
+-c-d- -P-r-e-d-i-c-t-i-v-e---M-a-i-n-t-e-n-a-n-c-e-
+-\-\-\-
+-
+-2-.- -I-n-s-t-a-l-l- -d-e-p-e-n-d-e-n-c-i-e-s-:-
+-\-\-\--a-s-h-
+-p-i-p- -i-n-s-t-a-l-l- ---r- -r-e-q-u-i-r-e-m-e-n-t-s-.-t-x-t-
+-\-\-\-
+-
+-3-.- -R-u-n- -t-h-e- -d-a-s-h-b-o-a-r-d-:-
+-\-\-\--a-s-h-
+-p-y-t-h-o-n- -a-p-p-.-p-y-
+-\-\-\-
+-*-T-h-e- -a-p-p- -w-i-l-l- -b-e- -a-v-a-i-l-a-b-l-e- -a-t- -h-t-t-p-:-/-/-l-o-c-a-l-h-o-s-t-:-7-8-6-0-.-*-
+-
+-------
+-
+-#-#- -C-I-/-C-D-
+-
+-T-h-i-s- -r-e-p-o-s-i-t-o-r-y- -u-s-e-s- -*-*-G-i-t-H-u-b- -A-c-t-i-o-n-s-*-*- -f-o-r- -c-o-n-t-i-n-u-o-u-s- -i-n-t-e-g-r-a-t-i-o-n-.- -O-n- -e-v-e-r-y- -p-u-s-h-,- -t-h-e- -w-o-r-k-f-l-o-w- -a-u-t-o-m-a-t-i-c-a-l-l-y-:-
+--- -S-e-t-s- -u-p- -t-h-e- -P-y-t-h-o-n- -e-n-v-i-r-o-n-m-e-n-t-.-
+--- -I-n-s-t-a-l-l-s- -d-e-p-e-n-d-e-n-c-i-e-s-.-
+--- -R-u-n-s- -s-y-n-t-a-x- -c-h-e-c-k-s- -a-n-d- -l-i-n-t-i-n-g- -t-o- -e-n-s-u-r-e- -p-r-o-d-u-c-t-i-o-n---r-e-a-d-y- -c-o-d-e-.-
+-
+-------
+-
+-#-#- -D-a-t-a-s-e-t-
+-
+-T-h-e- -m-o-d-e-l- -i-s- -t-r-a-i-n-e-d- -o-n- -t-h-e- -A-I-4-I- -2-0-2-0- -P-r-e-d-i-c-t-i-v-e- -M-a-i-n-t-e-n-a-n-c-e- -D-a-t-a-s-e-t- -(-P-r-e-d-i-c-t-i-v-e-_-M-.-c-s-v-)-.-
+-
+-#-#- -A-u-t-h-o-r-
+-*-*-F-a-w-a-z- -A-s-i-f-*-*-
