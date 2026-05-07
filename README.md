@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏭 Predictive Maintenance Dashboard
+# Predictive Maintenance Dashboard
 
 ### Real-Time Industrial Sensor Analytics & Failure Prediction
 
@@ -9,13 +9,15 @@
 [![Gradio](https://img.shields.io/badge/Gradio-UI-FF7C00?style=for-the-badge)](https://gradio.app/)
 [![Deployed on Hugging Face](https://img.shields.io/badge/Deployed-Hugging_Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](#)
 
+### 🌐 **[Live Demo: Try the Dashboard on Hugging Face!](https://huggingface.co/spaces/fawazasif/Predictive-Maintenance)**
+
 A complete machine learning pipeline and interactive dashboard that predicts industrial machine failures before they happen. Uses Decision Tree classification to analyze sensor data (rotational speed, torque, tool wear, temperature) and identify specific failure modes.
 
 </div>
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Real-Time Prediction**: Instantly predicts whether a machine will fail based on current sensor readings.
 - **Failure Mode Classification**: Doesn't just say "Fail" -- identifies the specific *type* of failure:
@@ -28,7 +30,7 @@ A complete machine learning pipeline and interactive dashboard that predicts ind
 
 ---
 
-## 🛠️ Architecture
+## Architecture
 
 1. **Preprocessing Pipeline** (pipeline.py): Cleans data, handles SMOTE balancing for rare failure types, and scales numerical features.
 2. **Model Router** (outer.py): Implements a two-stage routing architecture. Stage 1 detects if a failure will occur. If yes, Stage 2 identifies the specific failure mode.
@@ -37,7 +39,7 @@ A complete machine learning pipeline and interactive dashboard that predicts ind
 
 ---
 
-## ⚙️ Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.9+
@@ -64,7 +66,7 @@ python app.py
 
 ---
 
-## 🧪 CI/CD
+## CI/CD
 
 This repository uses **GitHub Actions** for continuous integration. On every push, the workflow automatically:
 - Sets up the Python environment.
@@ -73,9 +75,9 @@ This repository uses **GitHub Actions** for continuous integration. On every pus
 
 ---
 
-## 📄 Dataset
+## Dataset
 
 The model is trained on the AI4I 2020 Predictive Maintenance Dataset (Predictive_M.csv).
 
-## 👨‍💻 Author
+## Author
 **Fawaz Asif**
